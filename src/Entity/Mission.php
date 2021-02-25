@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MissionRepository;
 use App\Validator\MissionContact;
+use App\Validator\MissionTarget;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -79,8 +80,9 @@ class Mission
     private $contacts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Target::class, mappedBy="mission")
+     * @ORM\OneToMany(targetEntity=Target::class, mappedBy="mission", cascade={"remove"})
      * @Assert\NotNull()
+     * @MissionTarget()
      */
     private $targets;
 
@@ -243,6 +245,11 @@ class Mission
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     /**
      * @return Collection|Target[]
      */
@@ -253,6 +260,7 @@ class Mission
 
     public function addTarget(Target $target): self
     {
+
         if (!$this->targets->contains($target)) {
             $this->targets[] = $target;
             $target->setMission($this);

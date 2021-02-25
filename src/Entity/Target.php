@@ -57,6 +57,7 @@ class Target
 
     /**
      * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="targets")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $mission;
 

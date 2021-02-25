@@ -25,6 +25,7 @@ class TargetCrudController extends AbstractCrudController
             TextField::new('firstName'),
             DateField::new('birthdate'),
             AssociationField::new('nationality')->setRequired(true),
+            AssociationField::new('mission')->setRequired(false)->hideOnForm(),
             TextField::new('codeName'),
         ];
     }
