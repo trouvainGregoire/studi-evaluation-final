@@ -21,7 +21,7 @@ class CountryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
+            IdField::new('id')->setRequired(false),
             TextField::new('name'),
             AssociationField::new('nationality')->setRequired(true),
         ];
