@@ -29,6 +29,12 @@ class Hideway
      */
     private $code;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="hideways")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $country;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +60,18 @@ class Hideway
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }
