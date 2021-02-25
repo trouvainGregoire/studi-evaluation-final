@@ -42,10 +42,16 @@ class Nationality
      */
     private $targets;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="nationality")
+     */
+    private $contacts;
+
     public function __construct()
     {
         $this->agents = new ArrayCollection();
         $this->targets = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +137,36 @@ class Nationality
             // set the owning side to null (unless already changed)
             if ($target->getNationality() === $this) {
                 $target->setNationality(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setNationality($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getNationality() === $this) {
+                $contact->setNationality(null);
             }
         }
 
