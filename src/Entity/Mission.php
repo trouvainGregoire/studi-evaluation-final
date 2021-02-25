@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MissionRepository::class)
@@ -23,59 +24,75 @@ class Mission
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $codeName;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\Type("datetime")
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\Type("datetime")
      */
     private $endAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $country;
 
     /**
      * @ORM\ManyToMany(targetEntity=Agent::class, inversedBy="missions")
+     * @Assert\NotNull()
      */
     private $agents;
 
     /**
      * @ORM\ManyToMany(targetEntity=Contact::class, inversedBy="missions")
+     * @Assert\NotNull()
      */
     private $contacts;
 
     /**
      * @ORM\OneToMany(targetEntity=Target::class, mappedBy="mission")
+     * @Assert\NotNull()
      */
     private $targets;
 
     /**
      * @ORM\ManyToOne(targetEntity=MissionType::class, inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=MissionStatus::class, inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $status;
 
@@ -87,6 +104,7 @@ class Mission
     /**
      * @ORM\ManyToOne(targetEntity=Speciality::class, inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $speciality;
 
