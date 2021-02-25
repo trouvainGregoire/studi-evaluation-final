@@ -39,6 +39,12 @@ class Agent
      */
     private $identificationCode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Nationality::class, inversedBy="agents")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nationality;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +94,18 @@ class Agent
     public function setIdentificationCode(string $identificationCode): self
     {
         $this->identificationCode = $identificationCode;
+
+        return $this;
+    }
+
+    public function getNationality(): ?Nationality
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(?Nationality $nationality): self
+    {
+        $this->nationality = $nationality;
 
         return $this;
     }
