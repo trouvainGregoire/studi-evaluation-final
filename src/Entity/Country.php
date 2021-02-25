@@ -111,6 +111,8 @@ class Country
         return $this;
     }
 
+
+
     public function removeMission(Mission $mission): self
     {
         if ($this->missions->removeElement($mission)) {
