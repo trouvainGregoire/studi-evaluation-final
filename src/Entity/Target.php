@@ -108,6 +108,11 @@ class Target
         return $this->nationality;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function setNationality(?Nationality $nationality): self
     {
         $this->nationality = $nationality;

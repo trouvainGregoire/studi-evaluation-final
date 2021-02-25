@@ -85,6 +85,11 @@ class Speciality
         return $this->agents;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function addAgent(Agent $agent): self
     {
         if (!$this->agents->contains($agent)) {

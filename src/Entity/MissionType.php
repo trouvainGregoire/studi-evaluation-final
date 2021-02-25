@@ -44,6 +44,11 @@ class MissionType
         return $this->name;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function setName(string $name): self
     {
         $this->name = $name;

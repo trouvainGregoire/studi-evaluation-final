@@ -145,6 +145,11 @@ class Agent
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function removeSpeciality(Speciality $speciality): self
     {
         $this->specialities->removeElement($speciality);

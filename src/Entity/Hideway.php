@@ -106,6 +106,11 @@ class Hideway
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->address;
+    }
+
     public function removeMission(Mission $mission): self
     {
         if ($this->missions->removeElement($mission)) {
