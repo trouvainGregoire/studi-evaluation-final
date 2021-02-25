@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MissionRepository;
+use App\Validator\MissionContact;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -73,6 +74,7 @@ class Mission
     /**
      * @ORM\ManyToMany(targetEntity=Contact::class, inversedBy="missions")
      * @Assert\NotNull()
+     * @MissionContact()
      */
     private $contacts;
 
