@@ -84,7 +84,7 @@ class Nationality
     public function generateSlug(SluggerInterface $slugger)
     {
         if (!$this->slug || '-' === $this->slug) {
-            $this->slug = $slugger->slug($this)->lower();
+            $this->slug = $slugger->slug($this->getName())->lower();
         }
     }
 

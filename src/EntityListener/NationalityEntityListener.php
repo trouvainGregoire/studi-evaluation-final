@@ -1,4 +1,5 @@
 <?php
+
 namespace App\EntityListener;
 
 
@@ -11,15 +12,18 @@ class NationalityEntityListener
 {
     private $slugger;
 
-    public function __construct(SluggerInterface $slugger){
+    public function __construct(SluggerInterface $slugger)
+    {
         $this->slugger = $slugger;
     }
 
-    public function prePersist(Nationality $nationality, LifecycleEventArgs $event){
+    public function prePersist(Nationality $nationality, LifecycleEventArgs $event)
+    {
         $nationality->generateSlug($this->slugger);
     }
 
-    public function preUpdate(Nationality $nationality, LifecycleEventArgs $event){
+    public function preUpdate(Nationality $nationality, LifecycleEventArgs $event)
+    {
         $nationality->generateSlug($this->slugger);
     }
 }
