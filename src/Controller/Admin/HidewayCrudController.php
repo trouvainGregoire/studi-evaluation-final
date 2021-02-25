@@ -20,7 +20,7 @@ class HidewayCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
+            IdField::new('id')->setRequired(false)->hideOnForm(),
             TextField::new('address'),
             TextField::new('code'),
             AssociationField::new('country')->setRequired(true),
