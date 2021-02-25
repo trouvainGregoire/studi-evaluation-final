@@ -47,6 +47,11 @@ class Nationality
      */
     private $contacts;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Country::class, mappedBy="nationality", cascade={"persist", "remove"})
+     */
+    private $country;
+
     public function __construct()
     {
         $this->agents = new ArrayCollection();
@@ -169,6 +174,23 @@ class Nationality
                 $contact->setNationality(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(Country $country): self
+    {
+        // set the owning side of the relation if necessary
+        if ($country->getNationality() !== $this) {
+            $country->setNationality($this);
+        }
+
+        $this->country = $country;
 
         return $this;
     }

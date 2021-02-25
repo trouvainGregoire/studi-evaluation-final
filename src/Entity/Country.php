@@ -34,6 +34,12 @@ class Country
      */
     private $missions;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Nationality::class, inversedBy="country", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nationality;
+
     public function __construct()
     {
         $this->hideways = new ArrayCollection();
@@ -113,6 +119,18 @@ class Country
                 $mission->setCountry(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNationality(): ?Nationality
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(Nationality $nationality): self
+    {
+        $this->nationality = $nationality;
 
         return $this;
     }
