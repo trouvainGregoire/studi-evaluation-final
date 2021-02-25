@@ -45,6 +45,11 @@ class Target
      */
     private $nationality;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="targets")
+     */
+    private $mission;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +111,18 @@ class Target
     public function setNationality(?Nationality $nationality): self
     {
         $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    public function getMission(): ?Mission
+    {
+        return $this->mission;
+    }
+
+    public function setMission(?Mission $mission): self
+    {
+        $this->mission = $mission;
 
         return $this;
     }
