@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AgentRepository::class)
@@ -23,32 +24,42 @@ class Agent
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Type("datetime")
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $identificationCode;
 
     /**
      * @ORM\ManyToOne(targetEntity=Nationality::class, inversedBy="agents")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $nationality;
 
     /**
      * @ORM\ManyToMany(targetEntity=Speciality::class, inversedBy="agents")
+     * @Assert\NotNull()
      */
     private $specialities;
 
