@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SpecialityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -29,6 +31,16 @@ class Speciality
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Agent::class, mappedBy="specialities")
+     */
+    private $agents;
+
+    public function __construct()
+    {
+        $this->agents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -57,5 +69,32 @@ class Speciality
         if (!$this->slug || '-' === $this->slug) {
             $this->slug = $slugger->slug($this)->lower();
         }
+    }
+
+    /**
+     * @return Collection|Agent[]
+     */
+    public function getAgents(): Collection
+    {
+        return $this->agents;
+    }
+
+    public function addAgent(Agent $agent): self
+    {
+        if (!$this->agents->contains($agent)) {
+            $this->agents[] = $agent;
+            $agent->addSpeciality($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgent(Agent $agent): self
+    {
+        if ($this->agents->removeElement($agent)) {
+            $agent->removeSpeciality($this);
+        }
+
+        return $this;
     }
 }

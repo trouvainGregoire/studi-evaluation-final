@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AgentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -44,6 +46,16 @@ class Agent
      * @ORM\JoinColumn(nullable=false)
      */
     private $nationality;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Speciality::class, inversedBy="agents")
+     */
+    private $specialities;
+
+    public function __construct()
+    {
+        $this->specialities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +118,30 @@ class Agent
     public function setNationality(?Nationality $nationality): self
     {
         $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Speciality[]
+     */
+    public function getSpecialities(): Collection
+    {
+        return $this->specialities;
+    }
+
+    public function addSpeciality(Speciality $speciality): self
+    {
+        if (!$this->specialities->contains($speciality)) {
+            $this->specialities[] = $speciality;
+        }
+
+        return $this;
+    }
+
+    public function removeSpeciality(Speciality $speciality): self
+    {
+        $this->specialities->removeElement($speciality);
 
         return $this;
     }
