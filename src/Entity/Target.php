@@ -51,6 +51,7 @@ class Target
     /**
      * @ORM\ManyToOne(targetEntity=Nationality::class, inversedBy="targets")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $nationality;
 
