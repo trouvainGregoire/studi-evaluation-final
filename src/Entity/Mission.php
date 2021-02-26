@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MissionRepository;
 use App\Validator\MissionContact;
+use App\Validator\MissionHideway;
 use App\Validator\MissionTarget;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -102,6 +103,7 @@ class Mission
 
     /**
      * @ORM\ManyToMany(targetEntity=Hideway::class, inversedBy="missions")
+     * @MissionHideway()
      */
     private $hideways;
 
