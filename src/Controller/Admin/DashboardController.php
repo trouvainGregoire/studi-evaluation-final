@@ -16,6 +16,7 @@ use App\Entity\Target;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +32,9 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+
+        return $this->redirect($routeBuilder->setController(AgentCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -42,28 +45,27 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
 
-        yield MenuItem::linkToCrud('Agents', 'fas fa-list', Agent::class);
-        yield MenuItem::linkToCrud('Contacts', 'fas fa-list', Contact::class);
-        yield MenuItem::linkToCrud('Targets', 'fas fa-list', Target::class);
-        yield MenuItem::linkToCrud('Hideways', 'fas fa-list', Hideway::class);
-        yield MenuItem::linkToCrud('Specialities', 'fas fa-list', Speciality::class);
+        yield MenuItem::linkToCrud('Agents', 'fas fa-user-secret', Agent::class);
+        yield MenuItem::linkToCrud('Contacts', 'fas fa-user-tie', Contact::class);
+        yield MenuItem::linkToCrud('Targets', 'fas fa-user-tag', Target::class);
+        yield MenuItem::linkToCrud('Hideways', 'fas fa-warehouse', Hideway::class);
+        yield MenuItem::linkToCrud('Specialities', 'fas fa-swatchbook', Speciality::class);
 
         yield MenuItem::section('Missions');
 
-        yield MenuItem::linkToCrud('Missions', 'fas fa-list', Mission::class);
-        yield MenuItem::linkToCrud('Mission Status', 'fas fa-list', MissionStatus::class);
-        yield MenuItem::linkToCrud('Mission Types', 'fas fa-list', MissionType::class);
+        yield MenuItem::linkToCrud('Missions', 'fas fa-mask', Mission::class);
+        yield MenuItem::linkToCrud('Mission Status', 'fas fa-eye', MissionStatus::class);
+        yield MenuItem::linkToCrud('Mission Types', 'fas fa-sign', MissionType::class);
 
         yield MenuItem::section('Countries');
-        yield MenuItem::linkToCrud('Countries', 'fas fa-list', Country::class);
-        yield MenuItem::linkToCrud('Nationality', 'fas fa-list', Nationality::class);
+        yield MenuItem::linkToCrud('Countries', 'fas fa-globe-europe', Country::class);
+        yield MenuItem::linkToCrud('Nationality', 'fas fa-flag', Nationality::class);
 
 
         yield MenuItem::section('Users');
 
 
-        yield MenuItem::linkToCrud('Administrators', 'fas fa-list', Administrator::class);
+        yield MenuItem::linkToCrud('Administrators', 'fas fa-user-shield', Administrator::class);
     }
 }
