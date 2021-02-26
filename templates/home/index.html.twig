@@ -1,0 +1,48 @@
+{% extends 'base.public.html.twig' %}
+
+{% block title %}KGB Missions{% endblock %}
+
+{% block body %}
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Welcome to the list of all KGB Missions</h1>
+                    <p class="lead text-muted">These missions have the only goal of contributing to the common good</p>
+                    <p>
+                        <a href="{{ path('admin') }}" class="btn btn-primary my-2">Administration</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 text-center container">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Start At</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for mission in missions %}
+                    <tr>
+                        <th>{{ mission.id }}</th>
+                        <th>{{ mission.title }}</th>
+                        <th>{{ mission.description | raw }}</th>
+                        <th>{{ mission.status }}</th>
+                        <th>{{ mission.startAt | date }}</th>
+                        <th><a class="btn btn-primary my-2" href="{{ path('home', [mission.id]) }}">Voir</a></th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(missions) }}
+        </section>
+    </main>
+
+{% endblock %}

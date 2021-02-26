@@ -53,7 +53,7 @@ class Administrator implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
      */
-    private ?string $plainPassword = null;
+    private $plainPassword = null;
 
     /**
      * @ORM\Column(type="json")
