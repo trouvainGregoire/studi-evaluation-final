@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MissionRepository;
+use App\Validator\MissionAgent;
 use App\Validator\MissionContact;
 use App\Validator\MissionHideway;
 use App\Validator\MissionTarget;
@@ -70,6 +71,7 @@ class Mission
     /**
      * @ORM\ManyToMany(targetEntity=Agent::class, inversedBy="missions")
      * @Assert\NotNull()
+     * @MissionAgent()
      */
     private $agents;
 
