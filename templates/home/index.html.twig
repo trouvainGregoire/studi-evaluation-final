@@ -36,7 +36,7 @@
                         <th>{{ mission.description | raw }}</th>
                         <th>{{ mission.status }}</th>
                         <th>{{ mission.startAt | date }}</th>
-                        <th><a class="btn btn-primary my-2" href="{{ path('home', [mission.id]) }}">Voir</a></th>
+                        <th><a class="btn btn-primary my-2" href="{{ path('show_mission', {id: mission.id}) }}">Voir</a></th>
                     </tr>
                 {% endfor %}
                 </tbody>

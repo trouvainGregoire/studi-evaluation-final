@@ -1,0 +1,125 @@
+{% extends 'base.public.html.twig' %}
+
+{% block title %}{{ mission.title }}{% endblock %}
+
+{% block body %}
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Mission : {{ mission.title }}</h1>
+                    <p class="lead text-muted">{{ mission.description | raw }}</p>
+                    <p class="lead text-muted">Code name : {{ mission.codeName }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 text-center container">
+            <div class="row">
+                <div class="col">
+                    <label for="missionID">ID</label>
+                    <input type="text" id="missionID" class="form-control" value="{{ mission.id }}"
+                           aria-label="First name" disabled>
+                </div>
+                <div class="col">
+                    <label for="missionTitle">Title</label>
+                    <input type="text" id="missionTitle" class="form-control" value="{{ mission.title }}"
+                           aria-label="Last name" disabled>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <label for="missionType">Type</label>
+                    <input type="text" id="missionType" class="form-control" value="{{ mission.type.name }}"
+                           aria-label="First name" disabled>
+                </div>
+                <div class="col">
+                    <label for="missionStatus">Status</label>
+                    <input type="text" id="missionStatus" class="form-control" value="{{ mission.status.name }}"
+                           aria-label="Last name" disabled>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <label for="missionSpeciality">Speciality</label>
+                    <input type="text" id="missionSpeciality" class="form-control" value="{{ mission.speciality.name }}"
+                           aria-label="First name" disabled>
+                </div>
+                <div class="col">
+                    <label for="missionCountry">Country</label>
+                    <input type="text" id="missionCountry" class="form-control" value="{{ mission.country.name }}"
+                           aria-label="Last name" disabled>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <label for="missionStart">Start At</label>
+                    <input type="text" id="missionStart" class="form-control" value="{{ mission.startAt | date }}"
+                           aria-label="First name" disabled>
+                </div>
+                <div class="col">
+                    <label for="missionEnd">End At</label>
+                    <input type="text" id="missionEnd" class="form-control" value="{{ mission.endAt | date }}"
+                           aria-label="Last name" disabled>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <p>Agents</p>
+                    <ul>
+                        {% for agent in mission.agents %}
+                            <li>{{ agent.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col">
+                    <p>Contacts</p>
+                    <ul>
+                        {% for contact in mission.contacts %}
+                            <li>{{ contact.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <p>Targets</p>
+                    {% if mission.targets.count > 0 %}
+                        <ul>
+                            {% for target in mission.targets %}
+                                <li>{{ target.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No target</p>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <p>Hideways</p>
+                    {% if mission.hideways.count > 0 %}
+                        <ul>
+                            {% for hideway in mission.hideways %}
+                                <li>{{ hideway.address }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No hideway</p>
+                    {% endif %}
+
+                </div>
+            </div>
+            <br>
+        </section>
+    </main>
+{% endblock %}
