@@ -18,10 +18,8 @@ RUN apk add --no-cache \
 		gettext \
 		git \
 		jq \
+		yarn \
 	;
-
-RUN curl -sS dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - RUN echo "deb dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn
 
 ARG APCU_VERSION=5.1.19
 RUN set -eux; \
@@ -103,7 +101,6 @@ RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev && \
 
 COPY . .
 
-RUN yarn install && yarn build
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
@@ -112,6 +109,9 @@ RUN set -eux; \
 	composer symfony:dump-env prod; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync
+
+RUN yarn install && yarn build
+
 VOLUME /srv/app/var
 
 ENTRYPOINT ["docker-entrypoint"]
