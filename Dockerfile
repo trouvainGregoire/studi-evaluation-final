@@ -20,6 +20,9 @@ RUN apk add --no-cache \
 		jq \
 	;
 
+RUN curl -sS dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - RUN echo "deb dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
+
 ARG APCU_VERSION=5.1.19
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
@@ -97,7 +100,10 @@ RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev && \
 ###< doctrine/doctrine-bundle ###
 ###< recipes ###
 
+
 COPY . .
+
+RUN yarn install && yarn build
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
