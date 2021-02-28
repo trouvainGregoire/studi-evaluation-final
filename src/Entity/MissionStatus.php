@@ -13,10 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MissionStatusRepository::class)
- * @ApiResource(
- *     collectionOperations={},
- *     itemOperations={"get"={"normalization_context"={"groups"="missionStatus:item"}}},
- * )
  */
 class MissionStatus
 {
@@ -31,7 +27,7 @@ class MissionStatus
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
-     * @Groups({"missionStatus:item", "mission:list"})
+     * @Groups({"mission:list"})
      */
     private $name;
 
