@@ -17,31 +17,7 @@
         </section>
 
         <section class="py-5 text-center container">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Start At</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for mission in missions %}
-                    <tr>
-                        <th>{{ mission.id }}</th>
-                        <th>{{ mission.title }}</th>
-                        <th>{{ mission.description | raw }}</th>
-                        <th>{{ mission.status }}</th>
-                        <th>{{ mission.startAt | date }}</th>
-                        <th><a class="btn btn-primary my-2" href="{{ path('show_mission', {id: mission.id}) }}">Voir</a></th>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {{ knp_pagination_render(missions) }}
+            <table-missions></table-missions>
         </section>
     </main>
 

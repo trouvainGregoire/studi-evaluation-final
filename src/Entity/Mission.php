@@ -2,20 +2,30 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+
 use App\Repository\MissionRepository;
 use App\Validator\MissionAgent;
 use App\Validator\MissionContact;
 use App\Validator\MissionHideway;
 use App\Validator\MissionTarget;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MissionRepository::class)
  * @UniqueEntity("codeName")
+ * @ApiResource(
+ *     collectionOperations={"get"={"normalization_context"={"groups"="mission:list"}}},
+ *     itemOperations={"get"={}},
+ *     order={"startAt"="ASC"},
+ *     paginationEnabled=true
+ * )
  */
 class Mission
 {
@@ -23,6 +33,7 @@ class Mission
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"mission:list"})
      */
     private $id;
 
@@ -30,6 +41,7 @@ class Mission
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
+     * @Groups({"mission:list"})
      */
     private $title;
 
@@ -37,6 +49,7 @@ class Mission
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
+     * @Groups({"mission:list"})
      */
     private $description;
 
@@ -45,12 +58,14 @@ class Mission
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
      */
+
     private $codeName;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      * @Assert\Type("datetime")
+     * @Groups({"mission:list"})
      */
     private $startAt;
 
@@ -100,6 +115,7 @@ class Mission
      * @ORM\ManyToOne(targetEntity=MissionStatus::class, inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull()
+     * @Groups({"mission:list"})
      */
     private $status;
 
@@ -165,24 +181,24 @@ class Mission
         return $this;
     }
 
-    public function getStartAt(): ?\DateTimeInterface
+    public function getStartAt(): ?DateTimeInterface
     {
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeInterface $startAt): self
+    public function setStartAt(DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
         return $this;
     }
 
-    public function getEndAt(): ?\DateTimeInterface
+    public function getEndAt(): ?DateTimeInterface
     {
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeInterface $endAt): self
+    public function setEndAt(DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
 
