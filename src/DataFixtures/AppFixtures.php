@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Administrator;
 use App\Entity\Agent;
 use App\Entity\Contact;
 use App\Entity\Country;
@@ -15,6 +16,8 @@ use App\Entity\Target;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class AppFixtures extends Fixture
 {
@@ -276,6 +279,19 @@ class AppFixtures extends Fixture
         }
 
 
+        // On génère un admin
+        $admin = new Administrator();
+
+        $admin->setName($faker->name)
+            ->setFirstName($faker->firstName)
+            ->setEmail('admin@kgb.dev')
+            ->setPlainPassword('kgb.dev');
+
+        $encodedPassword = $this->encodePassword($admin, $admin->getPlainPassword());
+        $admin->setPassword($encodedPassword);
+
+        $manager->persist($admin);
+
         // $product = new Product();
         // $manager->persist($product);
 
@@ -335,7 +351,7 @@ class AppFixtures extends Fixture
             }
         }
 
-        return $matchedAgents[mt_rand(0, count($matchedAgents) -1)];
+        return $matchedAgents[mt_rand(1, count($matchedAgents) -1)];
     }
 
     /**
@@ -354,5 +370,16 @@ class AppFixtures extends Fixture
         }
 
         return $matchedTargets;
+    }
+
+    private function encodePassword($administrator, $password)
+    {
+        $passwordEncoderFactory = new EncoderFactory([
+            Administrator::class => new MessageDigestPasswordEncoder('sha512', true, 5000)
+        ]);
+
+        $encoder = $passwordEncoderFactory->getEncoder($administrator);
+
+        return $encoder->encodePassword($password, $administrator->getSalt());
     }
 }
